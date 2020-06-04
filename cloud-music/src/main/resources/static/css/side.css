@@ -1,0 +1,19 @@
+
+.button{
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    width: 140px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 0px 0px 5px 0px;
+}
+.button:visited{
+    border: 1px solid black;
+}
+.button:hover{
+    background-color: cadetblue;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>注册</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+</head>
+<body>
+<form th:action="@{/register}" th:method="post">
+    <table class="loginTable">
+        <tr>
+            <td colspan="2">
+                <img th:src="@{/img/login.jpg}" alt="login.jpg">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h1 th:text="${param.error}"></h1>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input class="textAre" type="text" name="username" th:placeholder="#{login.username}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input class="textAre" type="password" name="password" th:placeholder="#{login.password}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input class="textAre" type="email" name="email" th:placeholder="#{login.email}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button class="loginButton" type="submit" th:text="#{login.register}">注册</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
