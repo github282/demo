@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 04/06/2020 11:57:17
+ Date: 04/06/2020 12:04:18
 */
 
 SET NAMES utf8mb4;
@@ -28,6 +28,13 @@ CREATE TABLE `authority`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of authority
+-- ----------------------------
+INSERT INTO `authority` VALUES (1, 'admin');
+INSERT INTO `authority` VALUES (2, 'vip');
+INSERT INTO `authority` VALUES (3, 'common');
+
+-- ----------------------------
 -- Table structure for code
 -- ----------------------------
 DROP TABLE IF EXISTS `code`;
@@ -37,6 +44,11 @@ CREATE TABLE `code`  (
   `create_date` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`username`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of code
+-- ----------------------------
+INSERT INTO `code` VALUES ('user003', '507214', '2020-06-03 21:43:20');
 
 -- ----------------------------
 -- Table structure for persistent_logins
@@ -65,6 +77,17 @@ CREATE TABLE `user`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, 'admin', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', NULL, 1);
+INSERT INTO `user` VALUES (2, 'vip', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', NULL, 1);
+INSERT INTO `user` VALUES (3, 'user001', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', NULL, 1);
+INSERT INTO `user` VALUES (4, 'user002', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', '2020-06-03 15:36:27', 1);
+INSERT INTO `user` VALUES (5, 'user003', '$2a$10$XoEFsro9lxpRWQGhnriRsen1GifI/8kDSJEBbCYdA/YO3Uq9z8Uau', '2871451323@qq.com', '2020-06-03 15:44:40', 1);
+INSERT INTO `user` VALUES (6, 'user004', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', '2020-06-03 16:17:30', 1);
+INSERT INTO `user` VALUES (7, 'ZhuoJ', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', '2020-06-03 16:27:30', 1);
+
+-- ----------------------------
 -- Table structure for user_authority
 -- ----------------------------
 DROP TABLE IF EXISTS `user_authority`;
@@ -74,5 +97,16 @@ CREATE TABLE `user_authority`  (
   `authority_id` int(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_authority
+-- ----------------------------
+INSERT INTO `user_authority` VALUES (1, 1, 1);
+INSERT INTO `user_authority` VALUES (2, 2, 2);
+INSERT INTO `user_authority` VALUES (3, 3, 3);
+INSERT INTO `user_authority` VALUES (4, 4, 3);
+INSERT INTO `user_authority` VALUES (5, 5, 3);
+INSERT INTO `user_authority` VALUES (6, 6, 3);
+INSERT INTO `user_authority` VALUES (7, 7, 3);
 
 SET FOREIGN_KEY_CHECKS = 1;
