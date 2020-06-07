@@ -1,7 +1,5 @@
 package com.cloudmusic.config;
 
-import com.cloudmusic.entity.imageCode.FailureHandler;
-import com.cloudmusic.entity.imageCode.SuccessHandler;
 import com.cloudmusic.service.UserDetailsServiceImpl;
 import com.cloudmusic.servlet.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,17 +97,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ValidateCodeFilter validateCodeFilter;
     @Autowired
-    private SuccessHandler successHandler;
+    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
     @Autowired
-    private FailureHandler failureHandler;
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
     //自定义拦截器
     private void addFilterBefore(HttpSecurity http) throws Exception {
-        validateCodeFilter.setFailureHandler(failureHandler);
+        validateCodeFilter.setMyAuthenticationFailureHandler(myAuthenticationFailureHandler);
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//在进行用户身份验证之前进行拦截
                 .formLogin()
                 .loginPage("/userLogin")
                 .loginProcessingUrl("/userLogin")
-                .successHandler(successHandler)
-                .failureHandler(failureHandler);
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler);
     }
 }

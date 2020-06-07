@@ -1,4 +1,4 @@
-package com.cloudmusic.entity.imageCode;
+package com.cloudmusic.config;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class FailureHandler implements AuthenticationFailureHandler {
+public class MyAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request,

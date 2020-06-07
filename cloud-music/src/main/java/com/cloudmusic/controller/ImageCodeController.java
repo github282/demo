@@ -22,7 +22,7 @@ public class ImageCodeController {
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
-    @GetMapping("code/img")
+    @GetMapping("/code/img")
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //产生验证码图片
         ImageCode imageCode = createImageCode();
@@ -48,11 +48,13 @@ public class ImageCodeController {
 
         Random random = new Random();
         //产生随机线条
-        for (int i = 0; i > 155; i++){
+
+        for (int i = 0; i < 155; i++){
             int x = random.nextInt(width);
             int y = random.nextInt(height);
             int xl = random.nextInt(12);
             int yl = random.nextInt(12);
+            g.setColor(getRandColor(100,255));
             g.drawLine(x,y,x+xl,y+yl);
         }
         //产生随机数
@@ -61,7 +63,7 @@ public class ImageCodeController {
             String rand = String.valueOf(random.nextInt(10));
             sRand = sRand + rand;
             g.setColor(new Color(20 + random.nextInt(110),20 + random.nextInt(110),20 + random.nextInt(110)));
-            g.drawString(rand,13 * i + 6,16);
+            g.drawString(rand,20 * i + 10,random.nextInt(10)+20);
         }
         g.dispose();
 

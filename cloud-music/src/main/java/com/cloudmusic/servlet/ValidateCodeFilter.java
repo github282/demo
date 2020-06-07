@@ -1,7 +1,7 @@
 package com.cloudmusic.servlet;
 
 import com.cloudmusic.controller.ImageCodeController;
-import com.cloudmusic.entity.imageCode.FailureHandler;
+import com.cloudmusic.config.MyAuthenticationFailureHandler;
 import com.cloudmusic.entity.imageCode.ImageCode;
 import com.cloudmusic.entity.imageCode.ValidateCodeException;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
@@ -22,14 +22,14 @@ import java.io.IOException;
 @Component
 public class ValidateCodeFilter extends OncePerRequestFilter {
 
-    private FailureHandler failureHandler;
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
 
-    public FailureHandler getFailureHandler() {
-        return failureHandler;
+    public MyAuthenticationFailureHandler getMyAuthenticationFailureHandler() {
+        return myAuthenticationFailureHandler;
     }
 
-    public void setFailureHandler(FailureHandler failureHandler) {
-        this.failureHandler = failureHandler;
+    public void setMyAuthenticationFailureHandler(MyAuthenticationFailureHandler myAuthenticationFailureHandler) {
+        this.myAuthenticationFailureHandler = myAuthenticationFailureHandler;
     }
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
@@ -42,7 +42,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
             try {
                 validate(new ServletWebRequest(request));
             }catch (ValidateCodeException e){
-                failureHandler.onAuthenticationFailure(request, response, e);
+                myAuthenticationFailureHandler.onAuthenticationFailure(request, response, e);
                 return;
             }
         }

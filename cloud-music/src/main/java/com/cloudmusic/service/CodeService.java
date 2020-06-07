@@ -2,7 +2,7 @@ package com.cloudmusic.service;
 
 import com.cloudmusic.dao.CodeDao;
 import com.cloudmusic.dao.UserDao;
-import com.cloudmusic.domain.Code;
+import com.cloudmusic.domian.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -29,32 +29,20 @@ public class CodeService {
         code.setCreateDate(date);
         //产生6位随机数
         Random random = new Random();
-        int r = random.nextInt(999999);
-        //若产生的随机数不足6位，则用0补全
-        String s = "";
-        if (r < 1000000){
-            for (int i = 5; i > 0; i--){
-                if (r < Math.pow(10, i)){
-                    s = s + "0";
-                }
-            }
+        String c = "";
+        for (int i = 0; i < 6; i ++){
+            String s = Integer.toString(random.nextInt(10));
+            c += s;
         }
-        String c = s + r;
         code.setCode(c);
-
         codeDao.save(code);
         //发送邮件
-        String email = userDao.findEmailByUsername(username);
-        sendMail(code.getCode(), email);
-    }
-
-    private void sendMail(String code, String mailTo){
-
+        String mailTo = userDao.findEmailByUsername(username);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(this.mailFrom);
         message.setTo(mailTo);
         message.setSubject("您的Cloud Music账户正在进行密码重置");
-        message.setText("验证码:" + code + "\n五分钟内有效");
+        message.setText("验证码:" + code.getCode() + "\n五分钟内有效");
         mailSender.send(message);
     }
 

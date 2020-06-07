@@ -6,8 +6,8 @@
     <title>修改密码</title>
 </head>
 <body>
-    <form th:action="@{/resetPwd}" th:method="post">
         <table>
+            <form th:action="@{/resetPwd}" th:method="post">
             <tr>
                 <td>
                     验证码:
@@ -27,7 +27,7 @@
                     <button type="submit">确定</button>
                 </td>
             </tr>
+            </form>
         </table>
-    </form>
 </body>
 </html>
