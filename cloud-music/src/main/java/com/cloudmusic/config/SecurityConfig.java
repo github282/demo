@@ -56,6 +56,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.formLogin();
     }
 
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
+    @Autowired
+    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+    @Autowired
+    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+    //自定义拦截器
+    private void addFilterBefore(HttpSecurity http) throws Exception {
+        validateCodeFilter.setMyAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//在进行用户身份验证之前进行拦截
+                .formLogin()
+                .loginPage("/userLogin")
+                .loginProcessingUrl("/userLogin")
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler);
+    }
+
     // 自定义用户登录
     private void formLogin(HttpSecurity http) throws Exception {
         http.formLogin()
@@ -94,20 +111,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return jr;
     }
 
-    @Autowired
-    private ValidateCodeFilter validateCodeFilter;
-    @Autowired
-    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
-    @Autowired
-    private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
-    //自定义拦截器
-    private void addFilterBefore(HttpSecurity http) throws Exception {
-        validateCodeFilter.setMyAuthenticationFailureHandler(myAuthenticationFailureHandler);
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//在进行用户身份验证之前进行拦截
-                .formLogin()
-                .loginPage("/userLogin")
-                .loginProcessingUrl("/userLogin")
-                .successHandler(myAuthenticationSuccessHandler)
-                .failureHandler(myAuthenticationFailureHandler);
-    }
 }

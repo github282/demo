@@ -42,10 +42,9 @@ public class UserController {
     public String resetPwd(@RequestParam(value = "code") String code,
                            @RequestParam(value = "password") String password,
                            Model model){
-        Date date = new Date();
         String msg = "验证码错误或超时，重置密码失败";
         String username = getUsername();
-        if (codeService.checkCode(username, code, date)){
+        if (codeService.checkCode(username, code)){
             userService.resetPwd(username, password);
             msg = "重置成功";
         }

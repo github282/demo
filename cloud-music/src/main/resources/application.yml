@@ -2,12 +2,18 @@ spring:
   messages:
     basename: i18n/language
   datasource:
-    url: jdbc:mysql://localhost:3306/cloud_music?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/cloud_music?serverTimezone=Hongkong
     username: root
     password: 123
   redis:
     host: localhost
     port: 6379
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
   mail:
     host: smtp.163.com
     username: zhuoj127@163.com

@@ -1,6 +1,6 @@
 package com.cloudmusic.dao;
 
-import com.cloudmusic.domian.User;
+import com.cloudmusic.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

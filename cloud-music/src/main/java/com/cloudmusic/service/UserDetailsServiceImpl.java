@@ -1,7 +1,7 @@
 package com.cloudmusic.service;
 
-import com.cloudmusic.domian.Authority;
-import com.cloudmusic.domian.User;
+import com.cloudmusic.domain.Authority;
+import com.cloudmusic.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

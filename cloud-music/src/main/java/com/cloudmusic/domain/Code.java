@@ -1,8 +1,9 @@
-package com.cloudmusic.domian;
+package com.cloudmusic.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity(name = "code")
@@ -11,14 +12,22 @@ public class Code implements Serializable {
     @Id
     private String username;
     private String code;
-    private Date createDate;
+    private LocalDateTime expireTime;
+
+    public Code(){}
+
+    public Code(String username, String code, int expireIn){
+        this.username = username;
+        this.code = code;
+        this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
+    }
 
     @Override
     public String toString() {
         return "Code{" +
                 "username='" + username + '\'' +
                 ", code='" + code + '\'' +
-                ", createDate=" + createDate +
+                ", expireTime=" + expireTime +
                 '}';
     }
 
@@ -38,11 +47,11 @@ public class Code implements Serializable {
         this.code = code;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public LocalDateTime getExpireTime() {
+        return expireTime;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setExpireTime(LocalDateTime expireTime) {
+        this.expireTime = expireTime;
     }
 }
