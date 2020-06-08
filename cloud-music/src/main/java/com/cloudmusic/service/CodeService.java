@@ -1,7 +1,7 @@
 package com.cloudmusic.service;
 
 import com.cloudmusic.dao.CodeDao;
-import com.cloudmusic.domain.Code;
+import com.cloudmusic.domian.Code;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

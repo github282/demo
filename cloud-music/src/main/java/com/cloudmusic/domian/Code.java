@@ -1,4 +1,4 @@
-package com.cloudmusic.domain;
+package com.cloudmusic.domian;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
