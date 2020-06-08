@@ -1,6 +1,7 @@
 package com.cloudmusic.controller;
 
 import com.cloudmusic.domain.User;
+import com.cloudmusic.domian.User;
 import com.cloudmusic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
