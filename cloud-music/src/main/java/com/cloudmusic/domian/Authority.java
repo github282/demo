@@ -13,14 +13,6 @@ public class Authority implements Serializable {
     private Integer id;
     private String authority;
 
-    @Override
-    public String toString() {
-        return "Authority{" +
-                "id=" + id +
-                ", authority=" + authority +
-                '}';
-    }
-
     public Integer getId() {
         return id;
     }
@@ -35,5 +27,13 @@ public class Authority implements Serializable {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "id=" + id +
+                ", authority=" + authority +
+                '}';
     }
 }

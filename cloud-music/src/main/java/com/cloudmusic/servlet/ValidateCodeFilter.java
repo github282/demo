@@ -1,7 +1,7 @@
 package com.cloudmusic.servlet;
 
 import com.cloudmusic.controller.ImageCodeController;
-import com.cloudmusic.config.MyAuthenticationFailureHandler;
+import com.cloudmusic.bean.MyAuthenticationFailureHandler;
 import com.cloudmusic.entity.imageCode.ImageCode;
 import com.cloudmusic.entity.imageCode.ValidateCodeException;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;

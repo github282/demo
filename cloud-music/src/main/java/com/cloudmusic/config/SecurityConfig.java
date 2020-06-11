@@ -1,5 +1,7 @@
 package com.cloudmusic.config;
 
+import com.cloudmusic.bean.MyAuthenticationFailureHandler;
+import com.cloudmusic.bean.MyAuthenticationSuccessHandler;
 import com.cloudmusic.service.UserDetailsServiceImpl;
 import com.cloudmusic.servlet.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // 自定义用户授权管理
     private void authorizeRequests(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/code/img").permitAll()
-                .antMatchers("/css/**").permitAll()
-                .antMatchers("/img/**").permitAll()
-                .antMatchers("/detail/**").hasAnyRole("admin", "common", "vip")
-                .antMatchers("/detail/admin/**").hasRole("admin")
-                .antMatchers("/detail/common/**").hasRole("common")
-                .antMatchers("/detail/vip/**").hasRole("vip")
+                .antMatchers("/", "/register", "/code/img", "/css/**", "/img/**", "/musicResource/**").permitAll()
+                .antMatchers("/user/admin/**", "/upload/**").hasAuthority("admin")
                 .anyRequest().authenticated();
                 //.and()
                 //.formLogin();

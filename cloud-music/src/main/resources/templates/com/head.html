@@ -3,7 +3,6 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
 </head>
 <footer th:fragment="common_head">
     <link th:href="@{/css/head.css}" rel="stylesheet">
@@ -15,6 +14,12 @@
                     <a class="button" th:href="@{/userLogin}">登录</a>
                 </td>
             </tr>
+        </div>
+        <div>
+            <form th:action="@{/music/findByTitleLike}" th:method="post">
+                <input type="text" name="key">
+                <button type="submit">搜索</button>
+            </form>
         </div>
         <div sec:authorize="isAuthenticated()">
             <tr>

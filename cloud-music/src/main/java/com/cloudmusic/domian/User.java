@@ -19,18 +19,6 @@ public class User implements Serializable {
     private Date registrationDate;
     private Integer valid;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", registrationDate=" + registrationDate +
-                ", valid=" + valid +
-                '}';
-    }
-
     public Integer getId() {
         return id;
     }
@@ -77,5 +65,17 @@ public class User implements Serializable {
 
     public void setValid(Integer valid) {
         this.valid = valid;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", registrationDate=" + registrationDate +
+                ", valid=" + valid +
+                '}';
     }
 }

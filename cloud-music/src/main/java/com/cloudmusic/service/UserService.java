@@ -1,11 +1,12 @@
 package com.cloudmusic.service;
 
+import com.cloudmusic.bean.EncoderPwd;
 import com.cloudmusic.dao.AuthorityDao;
-import com.cloudmusic.dao.UADao;
+import com.cloudmusic.dao.UserAuthorityDao;
 import com.cloudmusic.dao.UserDao;
 import com.cloudmusic.domian.Authority;
-import com.cloudmusic.domian.UA;
 import com.cloudmusic.domian.User;
+import com.cloudmusic.domian.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,14 +17,17 @@ import java.util.List;
 
 @Service
 public class UserService {
+
     @Autowired
     private UserDao userDao;
     @Autowired
-    private UADao uaDao;
+    private UserAuthorityDao userAuthorityDao;
     @Autowired
     private AuthorityDao authorityDao;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private EncoderPwd encoderPwd;
 
     public User getUser(String username){
         User user = null;
@@ -53,21 +57,10 @@ public class UserService {
         return authorities;
     }
 
-    private String encoderPassword(String password){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode(password);
-    }
-
-    public void resetPwd(String username, String password){
-        User user = userDao.findByUsername(username);
-        user.setPassword(encoderPassword(password));
-        userDao.save(user);
-    }
-
     public void register(User u){
         User user = u;
         //对密码进行加密
-        user.setPassword(encoderPassword(u.getPassword()));
+        user.setPassword(encoderPwd.encoderPassword(u.getPassword()));
         //创建注册日期
         Date date = new Date();
         user.setRegistrationDate(date);
@@ -75,9 +68,10 @@ public class UserService {
         //将注册用户写入user数据库
         userDao.save(u);
         //将注册用户的权限写入user_authority数据库
-        UA ua = new UA();
-        ua.setUser_id(userDao.findIdByUsername(user.getUsername()));
-        ua.setAuthority_id(3);
-        uaDao.save(ua);
+        UserAuthority userAuthority = new UserAuthority();
+        userAuthority.setUser_id(userDao.findIdByUsername(user.getUsername()));
+        userAuthority.setAuthority_id(3);
+        userAuthorityDao.save(userAuthority);
     }
+
 }

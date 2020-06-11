@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<footer th:fragment="common_musicList">
+    <table>
+        <tr>
+            <th>
+                歌名
+            </th>
+            <th>
+                歌手
+            </th>
+            <th>
+                专辑
+            </th>
+            <th>
+                时长
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+        <tr th:each="music : ${pageInfo.list}">
+            <td th:text="${music.title}"></td>
+            <td th:text="${music.artist}"></td>
+            <td th:text="${music.album}"></td>
+            <td th:text="${music.duration}"></td>
+            <td>
+                <audio controls="controls">
+                    <source th:src="@{/musicResource/{artist} - {title}.mp3(artist=${music.artist}, title=${music.title})}" type="audio/mpeg">
+                </audio>
+            </td>
+        </tr>
+    </table>
+</footer>
+</html>

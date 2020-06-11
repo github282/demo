@@ -7,21 +7,12 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 @Entity(name = "user_authority")
-public class UA implements Serializable {
+public class UserAuthority implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer user_id;
     private Integer authority_id;
-
-    @Override
-    public String toString() {
-        return "UA{" +
-                "id=" + id +
-                ", user_id=" + user_id +
-                ", authority_id=" + authority_id +
-                '}';
-    }
 
     public Integer getId() {
         return id;
@@ -45,5 +36,14 @@ public class UA implements Serializable {
 
     public void setAuthority_id(Integer authority_id) {
         this.authority_id = authority_id;
+    }
+
+    @Override
+    public String toString() {
+        return "UA{" +
+                "id=" + id +
+                ", user_id=" + user_id +
+                ", authority_id=" + authority_id +
+                '}';
     }
 }

@@ -11,7 +11,7 @@
  Target Server Version : 50719
  File Encoding         : 65001
 
- Date: 04/06/2020 12:04:18
+ Date: 11/06/2020 22:35:14
 */
 
 SET NAMES utf8mb4;
@@ -22,9 +22,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `authority`;
 CREATE TABLE `authority`  (
-  `Id` int(20) NOT NULL AUTO_INCREMENT,
+  `id` int(20) NOT NULL AUTO_INCREMENT,
   `Authority` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`Id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -41,14 +41,34 @@ DROP TABLE IF EXISTS `code`;
 CREATE TABLE `code`  (
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `create_date` datetime(0) NULL DEFAULT NULL,
+  `expire_time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`username`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of code
 -- ----------------------------
-INSERT INTO `code` VALUES ('user003', '507214', '2020-06-03 21:43:20');
+INSERT INTO `code` VALUES ('user003', '357844', '2020-06-09 21:13:42');
+
+-- ----------------------------
+-- Table structure for music
+-- ----------------------------
+DROP TABLE IF EXISTS `music`;
+CREATE TABLE `music`  (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
+  `artist` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '艺术家',
+  `album` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '专辑',
+  `duration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '时长',
+  `vip` int(255) NULL DEFAULT 0 COMMENT 'vip专属',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件路径',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of music
+-- ----------------------------
+INSERT INTO `music` VALUES (1, 'Grenzlinie', 'Cyua', '???????? ORIGINAL SOUNDTRACK', '00:04:56', 0, 'Cyua - Grenzlinie.mp3');
 
 -- ----------------------------
 -- Table structure for persistent_logins
@@ -61,6 +81,11 @@ CREATE TABLE `persistent_logins`  (
   `last_used` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`series`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of persistent_logins
+-- ----------------------------
+INSERT INTO `persistent_logins` VALUES ('admin', '9xo0WIDpjNeydBv0t1Bxmw==', '2V+vSGX746f8gWdIblFQXg==', '2020-06-11 22:07:23');
 
 -- ----------------------------
 -- Table structure for user
@@ -83,7 +108,7 @@ INSERT INTO `user` VALUES (1, 'admin', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pM
 INSERT INTO `user` VALUES (2, 'vip', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', NULL, 1);
 INSERT INTO `user` VALUES (3, 'user001', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', NULL, 1);
 INSERT INTO `user` VALUES (4, 'user002', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', '2020-06-03 15:36:27', 1);
-INSERT INTO `user` VALUES (5, 'user003', '$2a$10$XoEFsro9lxpRWQGhnriRsen1GifI/8kDSJEBbCYdA/YO3Uq9z8Uau', '2871451323@qq.com', '2020-06-03 15:44:40', 1);
+INSERT INTO `user` VALUES (5, 'user003', '$2a$10$cprVJ5WIWZjvaeylY8ZBpO1n2XmW6OaYlgNEvQOIHxWd2Bv/Ngpe6', '2871451323@qq.com', '2020-06-03 15:44:40', 1);
 INSERT INTO `user` VALUES (6, 'user004', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', '2020-06-03 16:17:30', 1);
 INSERT INTO `user` VALUES (7, 'ZhuoJ', '$2a$10$5ooQI8dir8jv0/gCa1Six.GpzAdIPf6pMqdminZ/3ijYzivCyPlfK', '2871451323@qq.com', '2020-06-03 16:27:30', 1);
 

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form th:action="@{/upload/music}" th:method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        是否为vip专属音乐:
+        <input type="radio" name="limit" value="1" id="true"><label for="true">是</label>
+        <input type="radio" name="limit" value="0" id="false" checked><label for="false">否</label>
+        <button type="submit">提交</button>
+    </form>
+</body>
+</html>

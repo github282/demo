@@ -22,15 +22,6 @@ public class Code implements Serializable {
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }
 
-    @Override
-    public String toString() {
-        return "Code{" +
-                "username='" + username + '\'' +
-                ", code='" + code + '\'' +
-                ", expireTime=" + expireTime +
-                '}';
-    }
-
     public String getUsername() {
         return username;
     }
@@ -53,5 +44,14 @@ public class Code implements Serializable {
 
     public void setExpireTime(LocalDateTime expireTime) {
         this.expireTime = expireTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Code{" +
+                "username='" + username + '\'' +
+                ", code='" + code + '\'' +
+                ", expireTime=" + expireTime +
+                '}';
     }
 }

@@ -19,3 +19,18 @@ spring:
     username: zhuoj127@163.com
     password: QPYJCZAHODHTNTBT
     default-encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  pageSizeZero: false #pageSize=0
+
+#resource:
+#  resource-list:
+#    - handler: /music/**
+#      locations: file/D:/CloudMusicFile/
