@@ -6,8 +6,59 @@
     <title>Title</title>
 </head>
 <footer th:fragment="common_musicList">
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript">
+
+        function love(music) {
+            $.post({
+                url:"/music/love",
+                data:{
+                    'musicId':music.id
+                },
+                success:function (data) {
+                    var text = "";
+                    switch (data) {
+                        case true:
+                            text = "已收藏"
+                            break;
+                        case false:
+                            text = "未收藏"
+                            break;
+                    }
+                    var div = "#love_" + music.id;
+                    var html =
+                        "<button id='" + music.id +"' type='button' onclick='love(this)'>" +
+                        text + "</button>"
+                    $(div).html(html);
+                }
+            })
+        }
+        function playMusic(music) {
+            var str = music.id;
+            var id = str.substr(5);
+            $.post({
+                url:"/music/play",
+                // data:{'musicId':$("#id").val()},
+                data:{
+                    'musicId':id
+                },
+                success:function (data) {
+                    // alert(data)
+                    var html =
+                        "<audio controls='controls' autoplay='autoplay'>"
+                        + "<source src='" + data + "' type = 'audio/mpeg'"
+                        + "</audio>";
+                    $("#player").html(html);
+                },
+            });
+        }
+    </script>
+
+    <div id="player"></div>
     <table>
         <tr>
+            <th>
+            </th>
             <th>
                 歌名
             </th>
@@ -21,18 +72,21 @@
                 时长
             </th>
             <th>
-                操作
             </th>
         </tr>
-        <tr th:each="music : ${pageInfo.list}">
-            <td th:text="${music.title}"></td>
-            <td th:text="${music.artist}"></td>
-            <td th:text="${music.album}"></td>
-            <td th:text="${music.duration}"></td>
+        <tr th:each="model : ${pageInfo.list}">
             <td>
-                <audio controls="controls">
-                    <source th:src="@{/musicResource/{artist} - {title}.mp3(artist=${music.artist}, title=${music.title})}" type="audio/mpeg">
-                </audio>
+                <div th:id="love_ + ${model.music.id}">
+                    <button th:id="${model.music.id}" type="button" th:text="(${model.isLove()}?'已收藏':'未收藏')" onclick="love(this)"></button>
+                </div>
+<!--                <span th:id="${music.id}" th:text="(${music.isLove()}?'已收藏':'未收藏')"></span>-->
+            </td>
+            <td th:text="${model.music.title}"></td>
+            <td th:text="${model.music.artist}"></td>
+            <td th:text="${model.music.album}"></td>
+            <td th:text="${model.music.duration}"></td>
+            <td>
+                <button th:id="play_ + ${model.music.id}" type="button" onclick="playMusic(this)">播放</button>
             </td>
         </tr>
     </table>

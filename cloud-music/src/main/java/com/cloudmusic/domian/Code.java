@@ -1,6 +1,8 @@
 package com.cloudmusic.domian;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.util.Date;
 public class Code implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String username;
     private String code;
     private LocalDateTime expireTime;

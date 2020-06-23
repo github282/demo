@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface UserDao extends JpaRepository<User, Integer> {
+
     public User findByUsername(String username);
 
     @Query(value = "select id from user where username=?1", nativeQuery = true)

@@ -6,6 +6,18 @@
     <title>修改密码</title>
 </head>
 <body>
+        <script th:src="@{/js/jquery-3.5.1.js}"></script>
+        <script type="text/javascript">
+            function sendCodeMail() {
+                $.get({
+                    url:"/sendCodeMail",
+                    success:function (data) {
+                        alert(data)
+                    }
+                })
+            }
+        </script>
+        <button type="button" onclick="sendCodeMail()">发送验证码到邮箱</button>
         <table>
             <form th:action="@{/resetPwd}" th:method="post">
             <tr>

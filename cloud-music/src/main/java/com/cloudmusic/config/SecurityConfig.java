@@ -44,11 +44,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // 自定义用户授权管理
     private void authorizeRequests(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/register", "/code/img", "/css/**", "/img/**", "/musicResource/**").permitAll()
+                .antMatchers("/",
+                        "/css/**", "/img/**", "/js/**",
+                        "/register", "/code/img",
+                        "/musicResource/**", "/music/play").permitAll()
                 .antMatchers("/user/admin/**", "/upload/**").hasAuthority("admin")
                 .anyRequest().authenticated();
-                //.and()
-                //.formLogin();
+        //关闭csrf防御
+        http.csrf().disable();
     }
 
     @Autowired

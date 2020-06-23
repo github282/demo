@@ -2,19 +2,18 @@ package com.cloudmusic;
 
 import com.cloudmusic.dao.CodeDao;
 import com.cloudmusic.dao.UserDao;
+import com.cloudmusic.dao.UserMusicDao;
 import com.cloudmusic.domian.Code;
-import com.cloudmusic.service.CodeService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 @SpringBootTest
@@ -66,4 +65,11 @@ class CloudMusicApplicationTests {
         System.out.println(formatter.format(time));
     }
 
+    @Test
+    void countLocalDate(){
+        LocalDate date1 = LocalDate.parse("2019-01-01");
+        LocalDate date2 = LocalDate.parse("2020-01-13");
+        long days = date1.until(date2, ChronoUnit.DAYS);
+        System.out.println(days);
+    }
 }

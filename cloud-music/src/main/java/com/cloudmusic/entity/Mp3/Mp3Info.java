@@ -1,5 +1,6 @@
-package com.cloudmusic.entity.Mp3File;
+package com.cloudmusic.entity.Mp3;
 
+import org.apache.ibatis.jdbc.Null;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -27,6 +28,69 @@ public class Mp3Info {
         this.artist = artist;
         this.album = album;
         this.duration = duration;
+    }
+
+    public Mp3Info getMusicInfo(String filePath){
+        Mp3Info mp3Info = null;
+
+        try {
+            //读取文件信息
+            MP3File mp3File = (MP3File) AudioFileIO.read(new File(filePath));
+            //获取头
+            MP3AudioHeader header = mp3File.getMP3AudioHeader();
+
+            //歌名
+            String title = "无";
+            try{
+                ID3v23Frame titleFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TIT2");
+                title = titleFrame.getContent();
+            } catch (NullPointerException e){
+                //filePath=D:/CloudMusic/song.mp3
+                String[] str1 = filePath.split("/");
+                String str2 = str1[str1.length-1];
+                String[] str3 = str2.split("\\.");
+                title = str3[0];
+            }
+            //歌手
+            String artist = "无";
+            try {
+                ID3v23Frame artistFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TPE1");
+                artist = artistFrame.getContent();
+            } catch (NullPointerException e){
+
+            }
+            //专辑
+            String album = "无";
+            try {
+                ID3v23Frame albumFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TALB");
+                album = albumFrame.getContent();
+            } catch (NullPointerException e){
+
+            }
+            //时长
+            int duration = header.getTrackLength();
+
+            mp3Info = new Mp3Info(title, artist, album, secondToDate(duration));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (CannotReadException e) {
+            e.printStackTrace();
+        } catch (ReadOnlyFileException e) {
+            e.printStackTrace();
+        } catch (TagException e) {
+            e.printStackTrace();
+        } catch (InvalidAudioFrameException e) {
+            e.printStackTrace();
+        } catch (ClassCastException e){
+            e.printStackTrace();
+        }
+        return mp3Info;
+    }
+
+    private Time secondToDate(int second){
+        //转换为毫秒,但需要减去最基础的8小时
+        Time time = new Time(second * 1000 - 8 * 60 * 60 * 1000);
+        return time;
     }
 
     public String getTitle() {
@@ -59,49 +123,6 @@ public class Mp3Info {
 
     public void setDuration(Time duration) {
         this.duration = duration;
-    }
-
-    public Mp3Info getMusicInfo(String filePath){
-        Mp3Info mp3Info = null;
-
-        try {
-            //读取文件信息
-            MP3File mp3File = (MP3File) AudioFileIO.read(new File(filePath));
-            //获取头
-            MP3AudioHeader header = mp3File.getMP3AudioHeader();
-
-            //歌名
-            ID3v23Frame titleFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TIT2");
-            String title = titleFrame.getContent();
-            //歌手
-            ID3v23Frame artistFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TPE1");
-            String artist = artistFrame.getContent();
-            //专辑
-            ID3v23Frame albumFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TALB");
-            String album = albumFrame.getContent();
-            //时长
-            int duration = header.getTrackLength();
-
-            mp3Info = new Mp3Info(title, artist, album, secondToDate(duration));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CannotReadException e) {
-            e.printStackTrace();
-        } catch (ReadOnlyFileException e) {
-            e.printStackTrace();
-        } catch (TagException e) {
-            e.printStackTrace();
-        } catch (InvalidAudioFrameException e) {
-            e.printStackTrace();
-        }
-
-        return mp3Info;
-    }
-
-    private Time secondToDate(int second){
-        //转换为毫秒,但需要减去最基础的8小时
-        Time time = new Time(second * 1000 - 8 * 60 * 60 * 1000);
-        return time;
     }
 
     @Override

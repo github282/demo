@@ -12,13 +12,13 @@ import java.text.SimpleDateFormat;
 public class Music implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String title;//标题
-    private String artist;//艺术家
-    private String album;//专辑
-    private String duration;//时长
-    private Integer vip;//vip专属
-    private String path;//文件路径
+    protected Integer id;
+    protected String title;//标题
+    protected String artist;//艺术家
+    protected String album;//专辑
+    protected String duration;//时长
+    protected Integer vip;//vip专属
+    protected String path;//文件路径
 
     public Music(){};
 

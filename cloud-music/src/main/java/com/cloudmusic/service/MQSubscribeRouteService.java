@@ -1,20 +1,23 @@
 package com.cloudmusic.service;
 
+import com.cloudmusic.bean.UserDetailsBean;
 import com.cloudmusic.dao.CodeDao;
 import com.cloudmusic.dao.UserDao;
 import com.cloudmusic.domian.Code;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 @Service
-public class CodeService {
+public class MQSubscribeRouteService {
 
     @Autowired
     private CodeDao codeDao;
@@ -24,8 +27,11 @@ public class CodeService {
     private JavaMailSender mailSender;
     private static final String mailFrom = "zhuoj127@163.com";
 
-    @Async
-    public void sendCodeMail(String username){
+
+    @RabbitListener(bindings =@QueueBinding(value =@Queue("routing_queue"),
+            exchange =@Exchange(value = "routing_exchange",type = "direct"),
+            key = "routing_mail"))
+    public void routingConsumerError(String username) {
         //产生6位随机数
         Random random = new Random();
         String c = "";
@@ -51,13 +57,4 @@ public class CodeService {
         mailSender.send(message);
     }
 
-    public boolean checkCode(String username, String code){
-        Code c = codeDao.findByUsername(username);
-        LocalDateTime checkDate = LocalDateTime.now();
-        //验证码正确且在规定时间内进行了验证
-        if (code.equals(c.getCode()) && (checkDate.isBefore(c.getExpireTime()))){
-            return true;
-        }
-        return false;
-    }
 }

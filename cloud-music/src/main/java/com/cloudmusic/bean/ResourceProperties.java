@@ -3,7 +3,6 @@ package com.cloudmusic.bean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
 //@ConfigurationProperties(prefix = "resource")
 public class ResourceProperties {
 
-    private List<Resource> resourceList = new ArrayList<>();
+    private List<Resource> resourceList = null;
 
     public static class Resource{
         private String handler;
