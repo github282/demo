@@ -7,13 +7,10 @@
     <link th:href="@{/css/login.css}" rel="stylesheet">
 </head>
 <body>
+<div class="container" id="container">
+    <div class="form-container">
 <form th:action="@{/register}" th:method="post">
     <table class="loginTable">
-        <tr>
-            <td colspan="2">
-                <img th:src="@{/img/login.jpg}" alt="login.jpg">
-            </td>
-        </tr>
         <tr>
             <td colspan="2">
                 <h1 th:text="${param.error}"></h1>
@@ -41,5 +38,7 @@
         </tr>
     </table>
 </form>
+    </div>
+</div>
 </body>
 </html>
