@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,19 +27,26 @@ public class MusicController {
     @Autowired
     private MusicFeverService musicFeverService;
 
-    @ResponseBody
     @GetMapping("/top")
-    public List<MusicFever> getTop(){
-        List<MusicFever> weekTop = musicFeverService.getWeekTop(5);
-        List<MusicFever> monthTop = musicFeverService.getMonthTop(5);
-        List<MusicFever> top = weekTop;
-        for (MusicFever fever : monthTop){
-            top.add(fever);
+    public String getTop(Model model){
+        List<Integer> weekTopIds = musicFeverService.getWeekTop(5);
+        List<Integer> monthTopIds = musicFeverService.getMonthTop(5);
+        List<Music> weekTop = new ArrayList<>();
+        List<Music> monthTop = new ArrayList<>();
+        for (int id : weekTopIds){
+            Music music = musicService.findById(id);
+            weekTop.add(music);
         }
-        return top;
+        for (int id : monthTopIds){
+            Music music = musicService.findById(id);
+            monthTop.add(music);
+        }
+        model.addAttribute("weekTop", weekTop);
+        model.addAttribute("monthTop", monthTop);
+        return "top";
     }
 
-    @PostMapping("/findByTitleLike")
+    @PostMapping("/findByKey")
     public String selectMusic(@RequestParam(defaultValue = "1") int pageNum,
                               @RequestParam(defaultValue = "6") int pageSize,
                               String key,
@@ -105,6 +113,12 @@ public class MusicController {
         return "user/admin/uploadMusic";
     }
 
+    /**
+     * 处理ajax请求
+     * @param file
+     * @param vip
+     * @return
+     */
     @ResponseBody
     @PostMapping("/upload")
     public String uploadMusic(MultipartFile file, String vip){

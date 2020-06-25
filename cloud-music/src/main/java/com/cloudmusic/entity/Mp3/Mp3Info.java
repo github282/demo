@@ -1,6 +1,5 @@
-package com.cloudmusic.entity.Mp3;
+package com.cloudmusic.entity.mp3;
 
-import org.apache.ibatis.jdbc.Null;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -10,16 +9,18 @@ import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.ID3v23Frame;
 
+import javax.persistence.MappedSuperclass;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Time;
 
+@MappedSuperclass
 public class Mp3Info {
 
-    private String title;//标题
-    private String artist;//艺术家
-    private String album;//专辑
-    private Time duration;//时长
+    protected String title;//标题
+    protected String artist;//艺术家
+    protected String album;//专辑
+    protected Time duration;//时长
 
     public Mp3Info(){};
 
@@ -30,42 +31,50 @@ public class Mp3Info {
         this.duration = duration;
     }
 
-    public Mp3Info getMusicInfo(String filePath){
+    public Mp3Info (Mp3Info mp3Info){
+        this.title = mp3Info.getTitle();
+        this.artist = mp3Info.getArtist();
+        this.album = mp3Info.getAlbum();
+        this.duration = mp3Info.getDuration();
+    }
+
+    public Mp3Info getMusicInfo(File file){
         Mp3Info mp3Info = null;
 
         try {
             //读取文件信息
-            MP3File mp3File = (MP3File) AudioFileIO.read(new File(filePath));
+            MP3File mp3File = (MP3File) AudioFileIO.read(file);
             //获取头
             MP3AudioHeader header = mp3File.getMP3AudioHeader();
 
             //歌名
-            String title = "无";
+            String title;
             try{
                 ID3v23Frame titleFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TIT2");
                 title = titleFrame.getContent();
             } catch (NullPointerException e){
-                //filePath=D:/CloudMusic/song.mp3
-                String[] str1 = filePath.split("/");
+                //filePath=D:\CloudMusic\song.mp3
+                String filePath = file.getPath();
+                String[] str1 = filePath.split("\\\\");
                 String str2 = str1[str1.length-1];
                 String[] str3 = str2.split("\\.");
                 title = str3[0];
             }
             //歌手
-            String artist = "无";
+            String artist;
             try {
                 ID3v23Frame artistFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TPE1");
                 artist = artistFrame.getContent();
             } catch (NullPointerException e){
-
+                artist = "无";
             }
             //专辑
-            String album = "无";
+            String album;
             try {
                 ID3v23Frame albumFrame = (ID3v23Frame) mp3File.getID3v2Tag().frameMap.get("TALB");
                 album = albumFrame.getContent();
             } catch (NullPointerException e){
-
+                album = "无";
             }
             //时长
             int duration = header.getTrackLength();

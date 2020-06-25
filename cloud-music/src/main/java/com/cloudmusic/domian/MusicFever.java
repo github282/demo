@@ -3,12 +3,13 @@ package com.cloudmusic.domian;
 import com.sun.mail.imap.protocol.FLAGS;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity(name = "music_fever")
-public class MusicFever {
+public class MusicFever implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

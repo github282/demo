@@ -24,19 +24,12 @@ public class MusicFeverService {
         dao.save(fever);
     }
 
-    public List<MusicFever> getWeekTop(int units){
-        Sort sort = Sort.by(Sort.Direction.DESC, "weekFever");
-        return getTop(units, sort);
+    public List<Integer> getWeekTop(int num){
+        return dao.findWeekTop(num);
     }
 
-    public List<MusicFever> getMonthTop(int units){
-        Sort sort = Sort.by(Sort.Direction.DESC, "monthFever");
-        return getTop(units, sort);
-    }
-
-    private List<MusicFever> getTop(int units, Sort sort){
-        List<MusicFever> fevers = dao.findAll(sort);
-        return fevers;
+    public List<Integer> getMonthTop(int num){
+        return dao.findMonthTop(num);
     }
 
     @Scheduled(cron = "* * * * * 0")//星期天进行
@@ -61,7 +54,7 @@ public class MusicFeverService {
             int monthPlayedTimes = fever.getMonthPlayedTimes();
             long days = fever.getDate().until(today, ChronoUnit.DAYS);
             float hot = monthPlayedTimes - (days/100);
-            fever.setWeekFever(hot);
+            fever.setMonthFever(hot);
             fever.setMonthPlayedTimes(0);
             dao.save(fever);
         }

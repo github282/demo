@@ -8,19 +8,15 @@ import com.cloudmusic.dao.UserMusicDao;
 import com.cloudmusic.domian.Music;
 import com.cloudmusic.domian.MusicFever;
 import com.cloudmusic.domian.UserMusic;
-import com.cloudmusic.entity.Mp3.Mp3Info;
+import com.cloudmusic.entity.mp3.Mp3Info;
 import com.cloudmusic.model.MusicModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Time;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MusicService {
@@ -38,58 +34,94 @@ public class MusicService {
     @Autowired
     private MusicFeverDao musicFeverDao;
 
-    /**
-     * 需要解决最终一致性问题
-     * @param file
-     * @param limit
-     * @return msg
-     */
-    public String uploadMusic(MultipartFile file, Integer limit){
+    public String uploadMusic(MultipartFile mFile, Integer vip){
         //创建文件目录
         File dir = new File(musicDirPath);
         if (!dir.exists()){
             dir.mkdir();
         }
         //获取文件名并上传文件
-        String filename = file.getOriginalFilename();
+        String filename = mFile.getOriginalFilename();
         try {
-            file.transferTo(new File(musicDirPath + filename));
+            mFile.transferTo(new File(musicDirPath + filename));
         } catch (IOException e) {
             e.printStackTrace();
             return "上传失败";
         }
 
-        Mp3Info mp3Info = new Mp3Info().getMusicInfo(musicDirPath+filename);
-
-        String title = mp3Info.getTitle();//标题
-        String artist = mp3Info.getArtist();//艺术家
-        String album = mp3Info.getAlbum();//专辑
-        Time duration = mp3Info.getDuration();//时长
-        String path =  filename;//文件路径
-
-        Music music = new Music(title, artist, album, duration, limit, path);
+        File file = new File(musicDirPath + filename);
+        Mp3Info mp3Info = new Mp3Info().getMusicInfo(file);
+        Music music = new Music(mp3Info, vip, filename);
         int id = musicDao.save(music).getId();
         MusicFever fever = new MusicFever(id);
         musicFeverDao.save(fever);
         return "上传成功";
     }
 
+    public String uploadMusic(MultipartFile[] mFiles, Integer[] vip){
+        //创建文件目录
+        File dir = new File(musicDirPath);
+        if (!dir.exists()){
+            dir.mkdir();
+        }
+        //上传文件
+        for (int i = 0; i < mFiles.length; i++){
+            String filename = mFiles[i].getOriginalFilename();
+            File file = new File(musicDirPath + filename);
+            Mp3Info mp3Info = new Mp3Info().getMusicInfo(file);
+            Music music = new Music(mp3Info, vip[i], filename);
+            int musicId = musicDao.save(music).getId();
+            MusicFever fever = new MusicFever(musicId);
+            musicFeverDao.save(fever);
+        }
+        return "上传成功";
+    }
+
+//    public String uploadMusic(MultipartFile mFile, Integer vip){
+//        创建文件目录
+//        File dir = new File(musicDirPath);
+//        if (!dir.exists()){
+//            dir.mkdir();
+//        }
+//        try {
+//            //获取InputStream
+//            InputStream ins = mFile.getInputStream();
+//            new InputToByte(ins);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return "上传失败";
+//        }
+//        return "上传成功";
+//    }
+
     private List<MusicModel> createModels(List<Music> musicList){
-        //获取用户收藏的音乐id
-        String username = userDetailsBean.getUsername();
-        int user_id = userDao.findIdByUsername(username);
-        List<Integer> idList = userMusicDao.findMusicIdByUserId(user_id );
-        //合并
         List<MusicModel> models = new ArrayList<>();
-        for (Music music : musicList){
-            boolean isLove = false;
-            for (Integer id : idList){
-                if (music.getId()==id){
-                    isLove = true;
+        String username = null;
+        try {
+            username = userDetailsBean.getUsername();
+        }catch (ClassCastException e){
+//            System.out.println("找不到用户信息");
+        }
+        if (username != null){
+            //获取用户收藏的音乐id
+            int user_id = userDao.findIdByUsername(username);
+            List<Integer> idList = userMusicDao.findMusicIdByUserId(user_id );
+            //合并
+            for (Music music : musicList){
+                boolean isLove = false;
+                for (Integer id : idList){
+                    if (music.getId()==id){
+                        isLove = true;
+                    }
                 }
+                MusicModel model = new MusicModel(music, isLove);
+                models.add(model);
             }
-            MusicModel model = new MusicModel(music, isLove);
-            models.add(model);
+        }else {
+            for (Music music : musicList){
+                MusicModel model = new MusicModel(music, false);
+                models.add(model);
+            }
         }
         return models;
     }

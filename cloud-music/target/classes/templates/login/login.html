@@ -19,12 +19,12 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input class="textAre" type="text" name="username" th:placeholder="#{login.username}">
+                                <input class="textAre" type="text" name="username" th:placeholder="用户名">
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <input class="textAre" type="password" name="password" th:placeholder="#{login.password}">
+                                <input class="textAre" type="password" name="password" th:placeholder="密码">
                             </td>
                         </tr>
                         <tr>
@@ -44,12 +44,15 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <button class="loginButton" type="submit" th:text="#{login.signIn}">登陆</button>
+                                <button class="loginButton" type="submit">登陆</button>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td>
                                 <a class="register" th:href="@{/register}">注册</a>
+                            </td>
+                            <td>
+                                <a th:href="@{/forgetPwd}">忘记密码</a>
                             </td>
                         </tr>
                     </div>

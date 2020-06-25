@@ -4,22 +4,13 @@ import com.cloudmusic.domian.Music;
 
 public class MusicModel extends Music{
 
-    private Music music;
     private boolean isLove;//是否为用户收藏音乐
 
     public MusicModel(){}
 
     public MusicModel(Music music, boolean isLove){
-        this.music = music;
+        super(music);
         this.isLove = isLove;
-    }
-
-    public Music getMusic() {
-        return music;
-    }
-
-    public void setMusic(Music music) {
-        this.music = music;
     }
 
     public boolean isLove() {

@@ -1,9 +1,15 @@
 package com.cloudmusic;
 
 import com.cloudmusic.dao.CodeDao;
+import com.cloudmusic.dao.MusicFeverDao;
 import com.cloudmusic.dao.UserDao;
 import com.cloudmusic.dao.UserMusicDao;
 import com.cloudmusic.domian.Code;
+import com.cloudmusic.domian.MusicFever;
+import com.cloudmusic.domian.User;
+import com.cloudmusic.model.UserModel;
+import com.cloudmusic.service.AdminService;
+import com.cloudmusic.service.MusicFeverService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootTest
@@ -71,5 +78,50 @@ class CloudMusicApplicationTests {
         LocalDate date2 = LocalDate.parse("2020-01-13");
         long days = date1.until(date2, ChronoUnit.DAYS);
         System.out.println(days);
+    }
+
+    @Autowired
+    private MusicFeverService musicFeverService;
+    @Test
+    void fever(){
+        musicFeverService.countMusicMonthFever();
+        musicFeverService.countMusicWeekFever();
+    }
+
+    @Autowired
+    private MusicFeverDao musicFeverDao;
+    @Test
+    void feverOrder(){
+        List<Integer> weekFevers = musicFeverDao.findWeekTop(5);
+        System.out.println("周榜");
+        for (Integer fever : weekFevers){
+            System.out.println(fever);
+        }
+
+        System.out.println("月榜");
+        List<Integer> monthFevers = musicFeverDao.findMonthTop(5);
+        for (Integer fever : monthFevers){
+            System.out.println(fever);
+        }
+    }
+
+    @Test
+    void str(){
+        String filePath = "D:\\CloudMusic\\song.mp3";
+        String[] str1 = filePath.split("\\\\");
+        String str2 = str1[str1.length-1];
+        String[] str3 = str2.split("\\.");
+        String title = str3[0];
+        System.out.println(title);
+    }
+
+    @Autowired
+    private AdminService adminService;
+    @Test
+    void findAllUsers(){
+        List<UserModel> users = adminService.findAllUsers();
+        for (User user : users){
+            System.out.println(user);
+        }
     }
 }

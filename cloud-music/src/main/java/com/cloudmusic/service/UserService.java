@@ -57,15 +57,19 @@ public class UserService {
         List<Authority> authorities = null;
         Object o = redisTemplate.opsForValue().get("authority_" + username);
         if (o!=null){
-            authorities = (List<Authority>)o;
+            authorities = (List<Authority>) o;
         }else {
-            authorities = authorityDao.findAuthorityByUsername(username);
-            if (authorities.size()>0){
+            authorities = authorityDao.findAuthoritiesByUsername(username);
+            if (authorities==null){
                 redisTemplate.opsForValue().set("authority_" + username, authorities);
             }
         }
         return authorities;
     }
+
+    public User findByUsername(String username){return userDao.findByUsername(username);}
+
+    public User findByEmail(String email){return userDao.findByEmail(email);}
 
     public void register(User u){
         //对密码进行加密
@@ -82,27 +86,37 @@ public class UserService {
         userAuthorityDao.save(userAuthority);
     }
 
-    public void resetPwd(String password){
-        User user = userDao.findByUsername(userDetailsBean.getUsername());
+    public void resetPwd(String password, String username){
+        User user = userDao.findByUsername(username);
         user.setPassword(encoderPwd.encoderPassword(password));
         userDao.save(user);
         redisTemplate.opsForValue().getAndSet("user_"+user.getUsername(), user);
     }
 
-    public String sendCodeMail(){
-        String msg = "success";
+    public String sendCodeToMail(){
         try {
             String username = userDetailsBean.getUsername();
             rabbitTemplate.convertAndSend("routing_exchange", "routing_mail", username);
         }catch (Exception e){
             e.printStackTrace();
-            msg = "fail";
+            return  "fail";
         }
-        return msg;
+        return "success";
     }
 
-    public boolean checkCode(String code){
-        Code c = codeDao.findByUsername(userDetailsBean.getUsername());
+    public String sendCodeToMail(String email){
+        try {
+            User user = userDao.findByEmail(email);
+            rabbitTemplate.convertAndSend("routing_exchange", "routing_mail", user.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+            return "fail";
+        }
+        return "success";
+    }
+
+    public boolean checkCode(String code, String username){
+        Code c = codeDao.findByUsername(username);
         LocalDateTime checkDate = LocalDateTime.now();
         //验证码正确且在规定时间内进行了验证
         if (code.equals(c.getCode()) && (checkDate.isBefore(c.getExpireTime()))){

@@ -31,7 +31,7 @@ public class MQSubscribeRouteService {
     @RabbitListener(bindings =@QueueBinding(value =@Queue("routing_queue"),
             exchange =@Exchange(value = "routing_exchange",type = "direct"),
             key = "routing_mail"))
-    public void routingConsumerError(String username) {
+    public void routingMailByUsername(String username) {
         //产生6位随机数
         Random random = new Random();
         String c = "";

@@ -4,6 +4,7 @@ import com.cloudmusic.bean.MyAuthenticationFailureHandler;
 import com.cloudmusic.bean.MyAuthenticationSuccessHandler;
 import com.cloudmusic.service.UserDetailsServiceImpl;
 import com.cloudmusic.servlet.ValidateCodeFilter;
+import com.cloudmusic.servlet.ValidateUserFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -45,10 +46,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private void authorizeRequests(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/",
+                        "/forgetPwd", "/sendCodeToMail",
                         "/css/**", "/img/**", "/js/**",
-                        "/register", "/code/img",
-                        "/musicResource/**", "/music/play").permitAll()
-                .antMatchers("/user/admin/**", "/upload/**").hasAuthority("admin")
+                        "/register",
+                        "/code/img",
+                        "/musicResource/**",
+                        "/music/play", "/music/findByKey").permitAll()
+                .antMatchers("/admin/**", "/music/upload").hasAuthority("admin")
                 .anyRequest().authenticated();
         //关闭csrf防御
         http.csrf().disable();
@@ -57,13 +61,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private ValidateCodeFilter validateCodeFilter;
     @Autowired
+    private ValidateUserFilter validateUserFilter;
+    @Autowired
     private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
     @Autowired
     private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
     //自定义拦截器
     private void addFilterBefore(HttpSecurity http) throws Exception {
+        //验证 验证码是否正确
         validateCodeFilter.setMyAuthenticationFailureHandler(myAuthenticationFailureHandler);
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//在进行用户身份验证之前进行拦截
+                .formLogin()
+                .loginPage("/userLogin")
+                .loginProcessingUrl("/userLogin")
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenticationFailureHandler);
+        //验证 用户是否激活
+        validateUserFilter.setFailureHandler(myAuthenticationFailureHandler);
+        http.addFilterBefore(validateUserFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/userLogin")
                 .loginProcessingUrl("/userLogin")

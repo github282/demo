@@ -12,11 +12,11 @@ import java.util.Date;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String username;
-    private String password;
-    private String email;
-    private Date registrationDate;
+    protected Integer id;
+    protected String username;
+    protected String password;
+    protected String email;
+    protected Date registrationDate;
     private Integer valid;
 
     public Integer getId() {

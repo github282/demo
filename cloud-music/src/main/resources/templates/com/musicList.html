@@ -76,17 +76,17 @@
         </tr>
         <tr th:each="model : ${pageInfo.list}">
             <td>
-                <div th:id="love_ + ${model.music.id}">
-                    <button th:id="${model.music.id}" type="button" th:text="(${model.isLove()}?'已收藏':'未收藏')" onclick="love(this)"></button>
+                <div th:id="love_ + ${model.id}" sec:authorize="isAuthenticated()">
+                    <button th:id="${model.id}" type="button" th:text="(${model.isLove()}?'已收藏':'未收藏')" onclick="love(this)"></button>
                 </div>
 <!--                <span th:id="${music.id}" th:text="(${music.isLove()}?'已收藏':'未收藏')"></span>-->
             </td>
-            <td th:text="${model.music.title}"></td>
-            <td th:text="${model.music.artist}"></td>
-            <td th:text="${model.music.album}"></td>
-            <td th:text="${model.music.duration}"></td>
+            <td th:text="${model.title}"></td>
+            <td th:text="${model.artist}"></td>
+            <td th:text="${model.album}"></td>
+            <td th:text="${model.duration}"></td>
             <td>
-                <button th:id="play_ + ${model.music.id}" type="button" onclick="playMusic(this)">播放</button>
+                <button th:id="play_ + ${model.id}" type="button" onclick="playMusic(this)">播放</button>
             </td>
         </tr>
     </table>

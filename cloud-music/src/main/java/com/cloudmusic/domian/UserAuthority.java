@@ -1,9 +1,6 @@
 package com.cloudmusic.domian;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity(name = "user_authority")
@@ -11,17 +8,22 @@ public class UserAuthority implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer user_id;
-    private Integer authority_id;
+    @Column(name = "user_id")
+    private Integer userId;
+    @Column(name = "authority_id")
+    private Integer authorityId;
 
     public UserAuthority(){}
 
-    public UserAuthority(Integer user_id){
-        this.user_id = user_id;
-        this.authority_id = 3;
+    public UserAuthority(Integer userId){
+        this.userId = userId;
+        this.authorityId = 3;
     }
 
-    public UserAuthority(Integer user_id, Integer authority_id){}
+    public UserAuthority(Integer userId, Integer authorityId){
+        this.userId = userId;
+        this.authorityId = authorityId;
+    }
 
     public Integer getId() {
         return id;
@@ -31,28 +33,28 @@ public class UserAuthority implements Serializable {
         this.id = id;
     }
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public Integer getAuthority_id() {
-        return authority_id;
+    public Integer getAuthorityId() {
+        return authorityId;
     }
 
-    public void setAuthority_id(Integer authority_id) {
-        this.authority_id = authority_id;
+    public void setAuthorityId(Integer authorityId) {
+        this.authorityId = authorityId;
     }
 
     @Override
     public String toString() {
-        return "UA{" +
+        return "UserAuthority{" +
                 "id=" + id +
-                ", user_id=" + user_id +
-                ", authority_id=" + authority_id +
+                ", userId=" + userId +
+                ", authorityId=" + authorityId +
                 '}';
     }
 }

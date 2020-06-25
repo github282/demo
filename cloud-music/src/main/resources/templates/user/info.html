@@ -6,16 +6,13 @@
     <title>个人信息</title>
 </head>
 <body>
-    <tab>
-        <tr>
-            <td>昵称：</td>
-        </tr>
-        <tr>
-            <td>邮箱：</td>
-        </tr>
-        <tr>
-            <td><a th:href="@{/resetPwd}">重置密码</a></td>
-        </tr>
-    </tab>
+    <a th:href="@{/}">首页</a>
+    <p>权限：<span sec:authentication="principal.authorities"></span></p>
+    <p>用户名：<span th:text="${username}"></span></p>
+    <p>邮箱：<span th:text="${email}"></span></p>
+    <a th:href="@{/resetPwd}">重置密码</a>
+    <div sec:authorize="hasAuthority('admin')">
+        <a th:href="@{/admin/allUsers}">查看所有用户</a>
+    </div>
 </body>
 </html>
