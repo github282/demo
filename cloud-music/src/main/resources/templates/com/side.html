@@ -9,14 +9,14 @@
     <p>推介</p>
     <dl>
         <dt>
-            <a class="button" th:href="@{/}">发现音乐</a>
+            <a class="button" th:href="@{/music/top}">榜单</a>
         </dt>
     </dl>
     <div sec:authorize="isAuthenticated()">
         <p>我的音乐</p>
         <dl>
             <dt>
-                <a class="button" th:href="@{/}">我喜欢的音乐</a>
+                <a class="button" th:href="@{/music/myMusic}">我喜欢的音乐</a>
             </dt>
         </dl>
     </div>

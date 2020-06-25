@@ -3,35 +3,27 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Title</title>
 </head>
 <footer th:fragment="common_head">
     <link th:href="@{/css/head.css}" rel="stylesheet">
     <hr>
-    <table width="100%">
-        <div sec:authorize="isAnonymous()">
-            <tr>
-                <td align="center">
-                    <a class="button" th:href="@{/userLogin}">登录</a>
-                </td>
-            </tr>
+    <div width="100%">
+        <div align="center">
+            <form th:action="@{/music/findByKey}" th:method="post">
+                <input type="text" name="key">
+                <button type="submit" onclick="select()">搜索</button>
+            </form>
         </div>
-        <div sec:authorize="isAuthenticated()">
-            <tr>
-                <td align="left">
-                    <span sec:authentication="principal.authorities"></span>
-                </td>
-                <td align="right">
-                    <a th:href="@{/info}"><span sec:authentication="name">username</span></a>
-                </td>
-                <td align="center" width="100">
-                    <form th:action="@{/logout}" method="post">
-                        <input class="button" th:type="submit" th:value="退出">
-                    </form>
-                </td>
-            </tr>
+        <div sec:authorize="isAnonymous()" align="right">
+            <a class="button" th:href="@{/userLogin}">登录</a>
         </div>
-    </table>
+        <div sec:authorize="isAuthenticated()" align="right">
+            <a th:href="@{/info}"><span sec:authentication="name">username</span></a>
+            <form th:action="@{/logout}" method="post">
+                <input class="button" th:type="submit" th:value="注销">
+            </form>
+        </div>
+    </div>
     <hr>
 </footer>
 </html>

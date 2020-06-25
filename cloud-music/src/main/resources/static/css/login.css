@@ -1,29 +1,113 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: -20px 0 50px;
+    background-image: url(../img/img1.png);
+    background-size: cover;
+}
+
+h1{
+    font-size: 40px;
+    font-weight:bold;
+    magin: 0;
+    color: #FFA700;
+}
+
+.container {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: absolute;
+    overflow: hidden;
+    width: 700px;
+    max-width: 100%;
+    min-height: 450px;
+    opacity: 0.7;
+    background: white;
+    border-radius: 10px;
+}
+
+.form-container form {
+    margin: 0 auto;
+    position: relative;
+    top: 250%;
+    margin-top: 30px;
+}
+
+
 .loginTable{
     margin: auto;
     width: 310px;
 }
 
 .loginButton{
-    border: 1px solid black;
-    background-color: white;
-    color: black;
+    background-color: #FF7A00;
+    border: 1px solid #FF7A00;
+    color: white;
     text-align: center;
     font-size: 15px;
-    width: 80px;
-    height: 30px;
+    font-weight:800;
+    width: 90px;
+    height: 35px;
     border-radius: 5px;
+    margin: 20px 0;
 }
+
 .loginButton:hover{
-    background-color: cadetblue;
+    background-color: #FF9B40;
+    border: 1px solid #FF9B40;
 }
 
 .register{
-    color: blue;
+    font-size: 15px;
+    font-weight:800;
+    color: #FF7A00;
     text-decoration: none;
+
 }
 
 .register:visited{
-    color: blue;
+    color: #FF9B40;
+}
+
+input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 18px;
+    margin-right: 10px;
+    position: relative;
+    margin: 20px 0;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+}
+
+input[type="checkbox"]:checked::before {
+    content: "\2713";
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90%;
+    border: 1px solid #7D7D7D;
+    border-radius:4px;
+    color: #7D7D7D;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .textAre{
@@ -46,4 +130,35 @@ a:visited{
 
 td{
     text-align: center;
+}
+
+a[class="rmb"]{
+    font-size: 14.5px;
+    font-weight:600;
+    color: #787878;
+    text-decoration: none;
+
+}
+
+input[class="textAre"] {
+    width: 230px;
+    text-align: center;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #787878;
+    font-family: 'PLay', sans-serif;
+    font-size: 18px;
+    font-weight: 200px;
+    padding: 15px 0;
+    transition: border 0.5s;
+    outline: none;
+    color: #787878;
+    font-weight: bold;
+    border-radius: 0px;
+}
+
+a[class="switchLang"] {
+    font-size: 15px;
+    font-weight:600;
+    color: #787878;
 }

@@ -30,7 +30,6 @@ public class ImageCodeController {
         sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
         //将验证码的图片写到接口的响应中
         ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
-
     }
 
     //产生验证码图片

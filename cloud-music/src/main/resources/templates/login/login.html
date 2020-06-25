@@ -6,62 +6,62 @@
     <link th:href="@{/css/login.css}" rel="stylesheet">
 </head>
 <body>
-    <form th:action="@{/userLogin}" th:method="post">
-        <table class="loginTable">
-            <tr>
-                <td colspan="2">
-                    <img th:src="@{/img/login.jpg}" alt="login.jpg">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <h2 th:text="${param.error}" style="color: red">msg</h2>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input class="textAre" type="text" name="username" th:placeholder="#{login.username}">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input class="textAre" type="password" name="password" th:placeholder="#{login.password}">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <label>
-                        <input type="checkbox" name="rememberme"> 记住我
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input type="text" name="imageCode" th:placeholder="请输入图形验证码">
-                </td>
-                <td>
-                    <img src="/code/img">
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button class="loginButton" type="submit" th:text="#{login.signIn}">登陆</button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <a class="register" th:href="@{/register}">注册</a>
-                </td>
-            </tr>
-            <tr>
-                <td width="50%">
-                    <a class="switchLang" th:href="@{/login(l='zh_CN')}">中文</a>
-                </td>
-                <td width="50%">
-                    <a class="switchLang" th:href="@{/login(l='en_US')}">English</a>
-                </td>
-            </tr>
-        </table>
-    </form>
+<div class="container" id="container">
+    <div class="form-container">
+        <form th:action="@{/userLogin}" th:method="post">
+            <table class="loginTable">
+                <div class="social-container">
+                    <div class="form-container">
+                        <tr>
+                            <td colspan="2">
+                                <h1 th:text="${param.error}" >msg</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input class="textAre" type="text" name="username" th:placeholder="用户名">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input class="textAre" type="password" name="password" th:placeholder="密码">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <label>
+                                    <input type="checkbox" name="rememberme"> <a class="rmb">记住我</a>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" name="imageCode" th:placeholder="请输入图形验证码">
+                            </td>
+                            <td>
+                                <img src="/code/img">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button class="loginButton" type="submit">登陆</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class="register" th:href="@{/register}">注册</a>
+                            </td>
+                            <td>
+                                <a th:href="@{/forgetPwd}">忘记密码</a>
+                            </td>
+                        </tr>
+                    </div>
+                </div>
+
+            </table>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

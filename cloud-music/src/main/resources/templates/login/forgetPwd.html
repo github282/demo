@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>忘记密码</title>
+</head>
+<body>
+<script th:src="@{/js/jquery-3.5.1.js}"></script>
+<script type="text/javascript">
+    function sendCodeToMail() {
+        $.post({
+            url:"/sendCodeToMail",
+            data:{
+              'email':$("#email").val()
+            },
+            success:function (data) {
+                alert(data)
+            }
+        })
+    }
+
+    function resetPwd() {
+        $.post({
+            url:"/forgetPwd",
+            data:{
+                'email':$("#email").val(),
+                'code':$("#code").val(),
+                'password':$("#password").val()
+            },
+            success:function (data) {
+                var html =  data;
+                $("#content").html(html);
+            }
+        })
+    }
+</script>
+<div id="content">
+    <input id="email" type="text" th:placeholder="请输入邮箱">
+    <button type="button" onclick="sendCodeToMail()">发送验证码到邮箱</button>
+    <input id="code" type="text" th:placeholder="验证码">
+    <input id="password" type="text" th:placeholder="新密码">
+    <button type="button" onclick="resetPwd()">重置密码</button>
+</div>
+</body>
+</html>

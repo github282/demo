@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<footer th:fragment="common_musicList">
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript">
+
+        function love(music) {
+            $.post({
+                url:"/music/love",
+                data:{
+                    'musicId':music.id
+                },
+                success:function (data) {
+                    var text = "";
+                    switch (data) {
+                        case true:
+                            text = "已收藏"
+                            break;
+                        case false:
+                            text = "未收藏"
+                            break;
+                    }
+                    var div = "#love_" + music.id;
+                    var html =
+                        "<button id='" + music.id +"' type='button' onclick='love(this)'>" +
+                        text + "</button>"
+                    $(div).html(html);
+                }
+            })
+        }
+        function playMusic(music) {
+            var str = music.id;
+            var id = str.substr(5);
+            $.post({
+                url:"/music/play",
+                // data:{'musicId':$("#id").val()},
+                data:{
+                    'musicId':id
+                },
+                success:function (data) {
+                    // alert(data)
+                    var html =
+                        "<audio controls='controls' autoplay='autoplay'>"
+                        + "<source src='" + data + "' type = 'audio/mpeg'"
+                        + "</audio>";
+                    $("#player").html(html);
+                },
+            });
+        }
+    </script>
+
+    <div id="player"></div>
+    <table>
+        <tr>
+            <th>
+            </th>
+            <th>
+                歌名
+            </th>
+            <th>
+                歌手
+            </th>
+            <th>
+                专辑
+            </th>
+            <th>
+                时长
+            </th>
+            <th>
+            </th>
+        </tr>
+        <tr th:each="model : ${pageInfo.list}">
+            <td>
+                <div th:id="love_ + ${model.id}" sec:authorize="isAuthenticated()">
+                    <button th:id="${model.id}" type="button" th:text="(${model.isLove()}?'已收藏':'未收藏')" onclick="love(this)"></button>
+                </div>
+<!--                <span th:id="${music.id}" th:text="(${music.isLove()}?'已收藏':'未收藏')"></span>-->
+            </td>
+            <td th:text="${model.title}"></td>
+            <td th:text="${model.artist}"></td>
+            <td th:text="${model.album}"></td>
+            <td th:text="${model.duration}"></td>
+            <td>
+                <button th:id="play_ + ${model.id}" type="button" onclick="playMusic(this)">播放</button>
+            </td>
+        </tr>
+    </table>
+</footer>
+</html>
