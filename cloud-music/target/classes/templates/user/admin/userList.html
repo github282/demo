@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>用户管理</title>
+    <link th:href="@{/css/userlist.css}" rel="stylesheet">
+</head>
+<body>
+    <script th:src="@{/js/jquery-3.5.1.js}"></script>
+    <script type="text/javascript">
+        function changeAuthority(model) {
+            var id = model.id
+            $.post({
+                url: "/admin/changeAuthority",
+                data:{
+                    'userId':id
+                },
+                success:function (data) {
+                    var html =
+                        "<button class=\"table-button\" id='" + id + "' type='button' onclick='changeAuthority(this)'>" +
+                        data + "</button>";
+                    var div = "#authority_" + id;
+                    $(div).html(html);
+                }
+            })
+        }
+
+        function changeActivate(model) {
+            var id = model.id;
+            $.post({
+                url: "/admin/activate",
+                data:{
+                    'userId':id
+                },
+                success:function (data) {
+                    var text = "";
+                    switch (data) {
+                        case true:
+                            text = "已激活"
+                            break
+                        case false:
+                            text = "已停用"
+                            break
+                    }
+                    var html =
+                        "<button class=\"table-button\" id = '" + id + "' type='button' onclick='changeActivate(this)'>" +
+                        text + "</button>"
+                    var div = "#activate_"+id;
+                    $(div).html(html);
+                }
+            })
+        }
+
+    </script>
+
+    <a class="button" th:href="@{/}">首页</a>
+    <div class="container">
+        <div class="table4">
+            <table class="table4_1" style="width: 100%;">
+                <tr style="height: 55px;">
+                    <th>id</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>权限</th>
+                    <th>状态</th>
+                    <th>注册时间</th>
+                </tr>
+
+                <tr th:each="model : ${pageInfo.list}" style="height: 50px;">
+                    <td th:text="${model.id}"></td>
+                    <td th:text="${model.username}"></td>
+                    <td th:text="${model.email}"></td>
+                    <td>
+                        <div th:id="authority_ + ${model.id}">
+                            <button class="table-button" th:id="${model.id}" type="button" onclick="changeAuthority(this)"><span th:text="${model.authority}"></span></button>
+                        </div>
+                    </td>
+                    <td>
+                        <div th:id="activate_ + ${model.id}">
+                            <button class="table-button" th:id="${model.id}" type="button" onclick="changeActivate(this)"><span th:text="(${model.isValid()} ? '已激活':'已停用')"></span></button>
+                        </div>
+                    </td>
+                    <td th:text="${model.registrationDate}"></td>
+                </tr>
+
+
+
+            </table>
+
+            <!--分页-->
+            <div>
+                <ul class="pagination">
+                    <li th:if="${pageInfo.pageNum > 1}">
+                        <a class="page" th:href="@{/admin/allUsers?pageNum={pageNum}(pageNum=${pageInfo.pageNum - 1})}"><<</a>
+                    </li>
+                    <li>
+                        <a class="page" th:href="@{/admin/allUsers?pageNum={pageNum}(pageNum = 1)}">1</a>
+                    </li>
+                    <li th:if="${pageInfo.getPages() > 1}">
+                        <a class="page" th:href="@{/admin/allUsers?pageNum={pageNum}(pageNum = 2)}">2</a>
+                    </li>
+                    <li th:if="${pageInfo.getPages() > 2}">
+                        <a class="page" th:href="@{/admin/allUsers?pageNum={pageNum}(pageNum = 3)}">3</a>
+                    </li>
+                    <li th:if="${pageInfo.pageNum < pageInfo.getPages()}">
+                        <a class="page" th:href="@{/admin/allUsers?pageNum={pageNum}(pageNum=${pageInfo.pageNum + 1})}">>></a>
+                    </li>
+                    <li>
+
+                        <a>&nbsp;&nbsp;&nbsp;
+                            <span th:text="${pageInfo.pageNum}"></span>
+                            /
+                            <span th:text="${pageInfo.getPages()}"></span>
+                        </a>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

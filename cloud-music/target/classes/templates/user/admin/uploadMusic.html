@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>上传音乐</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+</head>
+<body>
+<a class="sbutton" th:href="@{/}">首页</a>
+<div class="container" id="container">
+    <div class="form-container">
+        <form th:action="@{/music/upload}" th:method="post" enctype="multipart/form-data">
+            <br>
+            <h1>音乐上传</h1>
+            <br>
+            <div style="text-align:center;">
+                <input class="chooseF"  type="file" name="file">
+            </div>
+            <br>
+            <h2>是否为vip专属音乐</h2>
+            <div style="text-align:center;">
+                <input class="chooseF" type="radio" name="vip" value="1" id="true"><label for="true"><a class="choose">是&nbsp;&nbsp;&nbsp;</a></label>
+                <input class="chooseF" type="radio" name="vip" value="0" id="false" checked><label for="false"><a class="choose">否</a></label>
+            </div>
+            <br><br>
+            <button class="sendcode2" type="submit">提交</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

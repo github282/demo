@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>修改密码</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+</head>
+<body>
+<a class="sbutton" th:href="@{/}">首页</a>
+<div class="container" id="container">
+    <div class="form-container">
+
+        <script th:src="@{/js/jquery-3.5.1.js}"></script>
+        <script type="text/javascript">
+            function sendCodeMail() {
+                $.get({
+                    url:"/sendCodeToMail",
+                    success:function (data) {
+                        alert(data)
+                    }
+                })
+            }
+        </script>
+
+            <br><br><br><br>
+            <button class="sendcode"  type="button" onclick="sendCodeMail()">发送验证码到邮箱</button>
+            <form th:action="@{/resetPwd}" th:method="post">
+                <table class="loginTable">
+                    <br>
+                <tr>
+                    <td>
+                        <input class="textAre" type="text" name="code" th:placeholder="验证码">
+                    </td>
+                </tr>
+                <br><br>
+                <tr>
+                    <td>
+                        <input class="textAre"  type="text" name="password" th:placeholder="新密码">
+                    </td>
+                </tr>
+                </table>
+                <br><br>
+                <tr>
+                    <td colspan="2">
+                        <button class="sendcode2" type="submit">确 定</button>
+                    </td>
+                </tr>
+            </form>
+
+
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>榜单</title>
+    <link th:href="@{/css/top.css}" rel="stylesheet">
+</head>
+
+<body>
+<div th:include="com/head::common_head"></div>
+<div th:include="com/side::common_side"></div>
+<div id="frame">
+
+    <br>
+    <div>
+        <h1>本月TOP5</h1>
+    </div>
+
+    <div class="table1">
+        <table class="table1_1" style="width: 100%;">
+            <tr style="height: 55px;">
+                <th>歌名</th>
+                <th>艺术家</th>
+                <th>专辑</th>
+            </tr>
+            <tr th:each="monthTopMusic : ${monthTop}" style="height: 45px;">
+                <td th:text="${monthTopMusic.title}"></td>
+                <td th:text="${monthTopMusic.artist}"></td>
+                <td th:text="${monthTopMusic.album}"></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div>
+        <h2>本周TOP5</h2>
+    </div>
+    <div class="table2">
+        <table class="table2_1" style="width: 100%;">
+            <tr style="height: 55px;">
+                <th>歌名</th>
+                <th>艺术家</th>
+                <th>专辑</th>
+            </tr>
+            <tr th:each="weekTopMusic : ${weekTop}" style="height: 45px;">
+                <td th:text="${weekTopMusic.title}"></td>
+                <td th:text="${weekTopMusic.artist}"></td>
+                <td th:text="${weekTopMusic.album}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

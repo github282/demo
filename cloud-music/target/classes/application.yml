@@ -1,15 +1,27 @@
 spring:
-  messages:
-    basename: i18n/language
   datasource:
-    url: jdbc:mysql://localhost:3306/cloud_music?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/cloud_music?serverTimezone=Hongkong&characterEncoding=utf-8
     username: root
     password: 123
   redis:
     host: localhost
     port: 6379
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
   mail:
     host: smtp.163.com
     username: zhuoj127@163.com
     password: QPYJCZAHODHTNTBT
     default-encoding: UTF-8
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+music-dir:
+  dir-path: "D:/CloudMusicFile/"
+

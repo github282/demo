@@ -1,0 +1,72 @@
+#frame{
+    position:absolute;
+    width:1100px;
+    overflow:hidden;
+    top:140px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1{
+    color: #505050;
+    float: left;
+    font-size: 35px;
+}
+
+h2{
+    color: #ffbd75;
+    float: left;
+    font-size: 35px;
+}
+
+/*列表颜色1*/
+.table1_1 table {
+    width:100%;
+    margin:15px 0;
+    border:0;
+    height: 400px;
+}
+.table1_1 th {
+    background-color: #ffb568;
+    color: #ffffff;
+}
+.table1_1,.table1_1 th,.table1_1 td {
+    font-size:15px;
+    text-align:center;
+    padding:4px;
+    border-collapse:collapse;
+}
+
+.table1_1 tr:nth-child(odd){
+    background-color: rgba(223, 223, 223, 0.52);
+}
+.table1_1 tr:nth-child(even){
+    background-color:#fdfdfd;
+}
+
+/*列表颜色2*/
+.table2_1 table {
+    width:100%;
+    margin:15px 0;
+    border:0;
+    height: 400px;
+}
+.table2_1 th {
+    background-color: #aaaaaa;
+    color: #ffffff;
+}
+.table2_1,.table2_1 th,.table2_1 td {
+    font-size:15px;
+    text-align:center;
+    padding:4px;
+    border-collapse:collapse;
+}
+
+.table2_1 tr:nth-child(odd){
+    background-color: rgba(223, 223, 223, 0.52);
+}
+.table2_1 tr:nth-child(even){
+    background-color:#fdfdfd;
+}

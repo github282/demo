@@ -1,0 +1,120 @@
+#frame{
+    position:absolute;
+    width:1100px;
+    height:400px;
+    overflow:hidden;
+    top:140px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#photos img{
+    float:left;
+    width:1100px;
+    height:400px;
+}
+
+#photos {
+    position: absolute;
+    width: calc(1100px * 2);/*---修改图片数量的话需要修改下面的动画参数*/
+}
+.play{
+    animation: ma 8s ease-out infinite alternate;
+}
+
+@keyframes ma {
+    0%,45% {
+        margin-left: 0px;
+    }
+    50%,100% {
+        margin-left: -1100px;
+    }
+}
+
+
+/*底部*/
+#bottom{
+    position:absolute;
+    width:1100px;
+    height:600px;
+    overflow:hidden;
+    top:570px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#left{
+    display: inline-block;
+    width:680px;
+    height: 400px;
+    float:left;
+    background-color: rgba(223, 223, 223, 0.58);
+}
+
+#right{
+    display: inline-block;
+    width:380px;
+    height:400px;
+    float:right;
+    background-color: rgba(255, 189, 117, 0.27);
+}
+
+#right h1{
+    margin: 0px 10px 30px 10px;
+    text-align: center;
+    color: #f2ae52;
+}
+
+#right h3{
+    margin: 10px 10px 10px 10px;
+    text-align: center;
+    color: #868686;
+}
+
+
+#left h1{
+    margin: 50px 10px 30px 40px;
+    text-align: left;
+    color: #6f6f6f;
+}
+
+#left h2{
+    margin: 0px 10px 30px 40px;
+    text-align: left;
+    color: #f2ae52;
+}
+
+#left h3{
+    margin: 30px 10px 10px 40px;
+    text-align: left;
+    color: rgba(129, 129, 129, 0.73);
+}
+
+#left_l {
+    margin: 10px 0px 0px 0px;
+    display: inline-block;
+    width:200px;
+    float:left;
+}
+
+#left_r {
+    margin: 10px 0px 0px 0px;
+    display: inline-block;
+    width:480px;
+    float:right;
+}
+
+#left_l img{
+    width: 80% ;
+    margin: 0px 10px 0px 40px;
+    /*text-align: left;*/
+}
+
+#right img{
+    width: 50% ;
+    margin: 30px 0px 0px 0px;
+}

@@ -7,39 +7,35 @@
     <link th:href="@{/css/login.css}" rel="stylesheet">
 </head>
 <body>
-<form th:action="@{/register}" th:method="post">
-    <table class="loginTable">
-        <tr>
-            <td colspan="2">
-                <img th:src="@{/img/login.jpg}" alt="login.jpg">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <h1 th:text="${param.error}"></h1>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input class="textAre" type="text" name="username" th:placeholder="#{login.username}">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input class="textAre" type="password" name="password" th:placeholder="#{login.password}">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input class="textAre" type="email" name="email" th:placeholder="#{login.email}">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <button class="loginButton" type="submit" th:text="#{login.register}">注册</button>
-            </td>
-        </tr>
-    </table>
-</form>
+<script th:src="@{/js/jquery-3.5.1.js}"></script>
+<script type="text/javascript">
+    function register() {
+        $.post({
+            url:"/register",
+            data:{
+                'username':$("#username").val(),
+                'password':$("#password").val(),
+                'email':$("#email").val()
+            },
+            success:function (data) {
+                var html =
+                    "<h1>" + data + "</h1>" +
+                    "<h2><a href='/'>返回首页</a></h2>";
+                $("#content").html(html);
+            }
+        })
+    }
+</script>
+<a class="sbutton" th:href="@{/userLogin}">登陆</a>
+<div class="container" id="container">
+    <div id="content" class="form-container" style="text-align: center;">
+        <br><br><br>
+        <h1>注册</h1>
+        <input id="username" class="textAre" type="text" th:placeholder="用户名"><br>
+        <input id="password" class="textAre" type="password" th:placeholder="密码"><br>
+        <input id="email" class="textAre" type="email" th:placeholder="邮箱"><br><br>
+        <button class="loginButton" type="submit" onclick="register()" >注册</button>
+    </div>
+</div>
 </body>
 </html>

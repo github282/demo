@@ -3,11 +3,64 @@
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Cloud Music</title>
+	<title>首页</title>
+	<link th:href="@{/css/index.css}" rel="stylesheet">
 </head>
 <body>
 	<div th:include="com/head::common_head"></div>
 	<div th:include="com/side::common_side"></div>
+	<div id="content"></div>
+
+	<div id="frame">
+		<div id="photos" class="play">
+			<img src="../img/index1.png">
+			<img src="../img/index2.png">
+		</div>
+	</div>
+
+	<div id="bottom">
+		<div id="left" >
+			<div>
+				<h1>本周热门推荐</h1>
+			</div>
+
+			<div id="left_l">
+				<a th:href="@{/music/top}" ><img src="../img/bd.png"></a>
+				<br><br><br>
+			</div>
+
+			<div id="left_r">
+				<tr >
+					<h2>Top1 &nbsp; <td th:text="${list[0].title}"></td></h2>
+					<h3>Top2 &nbsp;&nbsp; <td th:text="${list[1].title}"></td></h3>
+					<h3>Top3 &nbsp;&nbsp; <td th:text="${list[2].title}"></td></h3>
+				</tr>
+			</div>
+
+
+		</div>
+
+		<div id="right">
+			<div sec:authorize="isAnonymous()" align="right">
+				<br><br><br><br><br>
+				<h1>登陆账号</h1>
+				<h3>查看并管理你喜欢的音乐</h3>
+				<h3>方便随时随地收听</h3>
+				<br><br><br>
+			</div>
+
+			<div sec:authorize="isAuthenticated()" align="right">
+				<div style="text-align: center"><a th:href="@{/music/myMusic}" ><img src="../img/love.png"></a></div>
+				<h1 sec:authentication="name">username</h1>
+				<h3>权限：<span sec:authentication="principal.authorities"></span></h3>
+				<br><br><br>
+			</div>
+	</div>
+
+<br>
+<div>
+
+</div>
 </body>
 </html>
 

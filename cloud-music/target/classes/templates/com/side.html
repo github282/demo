@@ -3,22 +3,20 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/head.css}" rel="stylesheet">
 </head>
-<foot th:fragment="common_side">
-    <link th:href="@{/css/side.css}" rel="stylesheet">
-    <p>推介</p>
-    <dl>
-        <dt>
-            <a class="button" th:href="@{/}">发现音乐</a>
-        </dt>
-    </dl>
-    <div sec:authorize="isAuthenticated()">
-        <p>我的音乐</p>
-        <dl>
-            <dt>
-                <a class="button" th:href="@{/}">我喜欢的音乐</a>
-            </dt>
-        </dl>
+<footer th:fragment="common_side">
+    <!--导航条-->
+    <div class="back">
+        <div class="title">
+            <ul>
+                <li><a th:href="@{/}" >首页</a></li>
+                <li><a th:href="@{/music/top}" >榜单</a></li>
+                <li><a th:href="@{/music/myMusic}" >我喜欢的音乐</a></li>
+            </ul>
+        </div>
+
     </div>
-</foot>
+
+</footer>
 </html>

@@ -12,24 +12,12 @@ import java.util.Date;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String username;
-    private String password;
-    private String email;
-    private Date registrationDate;
+    protected Integer id;
+    protected String username;
+    protected String password;
+    protected String email;
+    protected Date registrationDate;
     private Integer valid;
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", registrationDate=" + registrationDate +
-                ", valid=" + valid +
-                '}';
-    }
 
     public Integer getId() {
         return id;
@@ -77,5 +65,17 @@ public class User implements Serializable {
 
     public void setValid(Integer valid) {
         this.valid = valid;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", registrationDate=" + registrationDate +
+                ", valid=" + valid +
+                '}';
     }
 }

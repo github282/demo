@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>个人信息</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+</head>
+<body>
+<a class="sbutton" th:href="@{/}">首页</a>
+<div class="container" id="container">
+    <div class="form-container">
+        <br><br>
+        <h1><span th:text="${username}"></span></h1>
+        <h2>权限：<span sec:authentication="principal.authorities"></span></h2>
+        <h2>邮箱：<span th:text="${email}"></span></h2>
+        <br>
+        <h3><a th:href="@{/resetPwd}">重置密码</a></h3>
+        <div sec:authorize="hasAuthority('admin')">
+            <h3><a  th:href="@{/admin/allUsers}">查看所有用户</a></h3>
+        </div>
+        <div sec:authorize="hasAuthority('admin')">
+            <h3><a  th:href="@{/music/upload}">上传音乐</a></h3>
+        </div>
+
+
+    </div>
+</div>
+</body>
+</html>
